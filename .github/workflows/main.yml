@@ -1,0 +1,37 @@
+name: Extract Folders
+
+on:
+  push:
+    paths:
+      - '**/*.zip'
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Extract folders
+        run: |
+          # List all zip files in the repository
+          zip_files=$(find . -name "*.zip")
+          
+          for zip_file in $zip_files
+          do
+            # Create a folder with the zip file's name (excluding the .zip extension)
+            folder_name="${zip_file%.zip}"
+            mkdir "$folder_name"
+            
+            # Extract the contents of the zip file into the newly created folder
+            unzip "$zip_file" -d "$folder_name"
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Automatically extract folders from zip files"
+          git push
