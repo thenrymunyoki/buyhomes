@@ -30,8 +30,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "thenrymunyoki@gmail.com"
+          git config --local user.name "thenrymunyoki"
           git add .
           git commit -m "Automatically extract folders from zip files"
           git push
