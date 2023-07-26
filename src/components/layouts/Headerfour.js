@@ -2,14 +2,16 @@ import React, { useState, useEffect, Fragment } from "react";
 import Menu from "../layouts/Menu";
 import Mobilemenu from "../layouts/Mobilemenu";
 import { Link } from "react-router-dom";
-import { Dropdown, NavLink } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Headerfour = () => {
   const [navtoggle, setnavtoggle] = useState(false);
   const [sticky, setSticky] = useState("false");
+
   // const navigate = useNavigate();
+
   const user = JSON.parse(localStorage.getItem("userInfo"));
+
   const logout = () => {
     localStorage.removeItem("userInfo");
     window.location.replace("/");
@@ -48,7 +50,7 @@ const Header = () => {
         onClick={() => setnavtoggle(false)}
       />
       {/* Header Start */}
-      <header className={`main-header header-fw can-sticky header-1 ${sticky}`}>
+      <header className={`main-header header-fw ${sticky}`}>
         {/* Top Header Start */}
         <div className="top-header">
           {user == null ? (
@@ -86,12 +88,12 @@ const Header = () => {
               <ul className="top-header-nav">
                 <li>
                   {" "}
-                  <Link to="/login"> Login</Link>{" "}
+                  <Link to={"/login"}> Login</Link>{" "}
                 </li>
                 <li>or</li>
                 <li>
                   {" "}
-                  <Link to="/register"> Signup</Link>{" "}
+                  <Link to={"/register"}> Signup</Link>{" "}
                 </li>
               </ul>
             </div>
@@ -135,6 +137,7 @@ const Header = () => {
         <nav className="navbar">
           {/* Menu */}
           <Menu />
+
           <div className="header-controls">
             <ul className="header-controls-inner d-none d-lg-flex">
               <li>
@@ -153,62 +156,6 @@ const Header = () => {
               <span />
             </div>
           </div>
-          <div>
-            <Dropdown className="acr-language-selector">
-              <Dropdown.Toggle as={NavLink} className="dropdownicon">
-                <img
-                  src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/flags/united-states.png"
-                  }
-                  alt="flag"
-                />
-                <span>English</span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown-menu">
-                <ul>
-                  <li>
-                    {" "}
-                    <Link to="#">
-                      <img
-                        src={
-                          process.env.PUBLIC_URL + "/assets/img/flags/china.png"
-                        }
-                        alt="flag"
-                      />{" "}
-                      Chinese
-                    </Link>{" "}
-                  </li>
-                  <li>
-                    {" "}
-                    <Link to="#">
-                      <img
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/assets/img/flags/united-states.png"
-                        }
-                        alt="flag"
-                      />
-                      English
-                    </Link>{" "}
-                  </li>
-                  <li>
-                    {" "}
-                    <Link to="#">
-                      <img
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/assets/img/flags/thailand.png"
-                        }
-                        alt="flag"
-                      />{" "}
-                      Thai
-                    </Link>{" "}
-                  </li>
-                </ul>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
         </nav>
       </header>
       {/* Header End */}
@@ -216,4 +163,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Headerfour;
