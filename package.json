@@ -89,7 +89,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node custom-build.js",
+    "build": "node custom-build-script.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
