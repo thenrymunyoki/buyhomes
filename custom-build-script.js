@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const webpackConfig = require('.config/webpack.config.js'); // Replace 'webpack.config.js' with the name of your webpack configuration file if different
+const webpackConfig = require('config/webpack.config.js'); // Replace 'webpack.config.js' with the name of your webpack configuration file if different
 
 async function build() {
   try {
