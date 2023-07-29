@@ -1,5 +1,7 @@
+const path = require('path');
 const webpack = require('webpack');
-const webpackConfig = require('config/webpack.config.js'); // Replace 'webpack.config.js' with the name of your webpack configuration file if different
+
+const webpackConfig = require('./config/webpack.config.js'); // Adjust the path to webpack.config.js
 
 async function build() {
   try {
