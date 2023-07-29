@@ -1,10 +1,14 @@
-const path = require('path');
 const webpack = require('webpack');
-
-const webpackConfig = require('./config/webpack.config.js'); // Adjust the path to webpack.config.js
+const webpackConfig = require('./config/webpack.config.js'); // Update the path to your webpack configuration file
 
 async function build() {
   try {
+    // Check if NODE_ENV is defined in the environment variables
+    if (!process.env.NODE_ENV) {
+      console.error('Error: NODE_ENV environment variable is not set.');
+      process.exit(1);
+    }
+
     // Run webpack with the specified configuration
     await new Promise((resolve, reject) => {
       webpack(webpackConfig, (err, stats) => {
