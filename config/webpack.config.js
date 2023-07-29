@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js', // Replace 'index.js' with your React application's entry point
+  entry: path.resolve(__dirname, 'src', 'index.js'), // Update the entry point path
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
