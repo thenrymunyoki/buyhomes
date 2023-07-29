@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/App.js', // Replace 'App.js' with the correct path to your React application's entry point
+  entry: './src/App.js', // Replace 'index.js' with your React application's entry point
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -21,9 +21,6 @@ module.exports = {
     ],
   },
   resolve: {
-    alias: {
-      // Add aliases for your custom modules or directories here, if needed
-    },
-    extensions: ['.js', '.jsx'], // Add any other extensions you want to resolve automatically
+    extensions: ['.js', '.jsx'],
   },
 };
