@@ -1,120 +1,18 @@
-'use strict';
+const express = require('express');
+const path = require('path');
 
-process.env.BABEL_ENV = 'development';
-process.env.NODE_ENV = 'development';
+const app = express();
+const port = process.env.PORT || 3000;
 
-process.on('unhandledRejection', err => {
-  throw err;
+// Serve static files from the 'build' directory
+app.use(express.static(path.join(__dirname, 'build')));
+
+// For any other route, serve the index.html file as a fallback
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-require('../config/env');
-
-const fs = require('fs');
-const chalk = require('react-dev-utils/chalk');
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const {
-  choosePort,
-  createCompiler,
-  prepareProxy,
-  prepareUrls,
-} = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
-const semver = require('semver');
-const paths = require('../config/paths');
-const configFactory = require('../config/webpack.config');
-const createDevServerConfig = require('../config/webpackDevServer.config');
-const getClientEnvironment = require('../config/env');
-const react = require(require.resolve('react', { paths: [paths.appPath] }));
-
-const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
-const useYarn = fs.existsSync(paths.yarnLockFile);
-const isInteractive = process.stdout.isTTY;
-
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
-}
-
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
-
-if (process.env.HOST) {
-  console.log(
-    chalk.cyan(
-      `Attempting to bind to HOST environment variable: ${chalk.yellow(
-        chalk.bold(process.env.HOST)
-      )}`
-    )
-  );
-  console.log(
-    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
-  );
-  console.log(
-    `Learn more here: ${chalk.yellow('https://cra.link/advanced-config')}`
-  );
-  console.log();
-}
-
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-checkBrowsers(paths.appPath, isInteractive)
-  .then(() => {
-    return choosePort(HOST, DEFAULT_PORT);
-  })
-  .then(port => {
-    if (port == null) {
-      return;
-    }
-
-    const config = configFactory('development');
-    const urls = prepareUrls('http', HOST, port, paths.publicUrlOrPath.slice(0, -1));
-
-    const useTypeScript = fs.existsSync(paths.appTsConfig);
-    const compiler = createCompiler({
-      config,
-      urls,
-      useYarn,
-      useTypeScript,
-      webpack,
-    });
-
-    const proxySetting = require(paths.appPackageJson).proxy;
-    const proxyConfig = prepareProxy(proxySetting, paths.appPublic, paths.publicUrlOrPath);
-
-    const serverConfig = {
-      ...createDevServerConfig(proxyConfig, urls.lanUrlForConfig),
-      host: HOST,
-      port,
-    };
-    const devServer = new WebpackDevServer(serverConfig, compiler);
-
-    devServer.startCallback(() => {
-      if (env.raw.FAST_REFRESH && semver.lt(react.version, '16.10.0')) {
-        console.log(
-          chalk.yellow(
-            `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
-          )
-        );
-      }
-
-      console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
-    });
-
-    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
-      process.on(sig, function () {
-        devServer.close();
-        process.exit();
-      });
-    });
-
-    if (process.env.CI !== 'true') {
-      process.stdin.resume(); // keep the stdin open so the app doesn't terminate on Render
-    }
-  })
-  .catch(err => {
-    if (err && err.message) {
-      console.log(err.message);
-    }
-    process.exit(1);
-  });
+// Start the Express server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
