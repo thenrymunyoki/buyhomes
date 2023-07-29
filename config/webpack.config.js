@@ -20,4 +20,10 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      // Add aliases for your custom modules or directories here, if needed
+    },
+    extensions: ['.js', '.jsx'], // Add any other extensions you want to resolve automatically
+  },
 };
